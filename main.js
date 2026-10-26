@@ -9,7 +9,11 @@ const co=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return
 document.querySelectorAll('.num').forEach(e=>co.observe(e));
 const b=document.querySelector('.burger'),n=document.querySelector('nav');b.onclick=()=>n.classList.toggle('open');n.onclick=()=>n.classList.remove('open');
 const g=[...document.querySelectorAll('.g')],lb=document.querySelector('.lb'),li=lb.querySelector('img'),lp=lb.querySelector('p');let k=0;
-function show(i){k=(i+g.length)%g.length;li.src=g[k].href;lp.textContent=g[k].querySelector('span').textContent;lb.classList.add('on')}
+function show(i){k=(i+g.length)%g.length;if(g[k].classList.contains('hide')){const st=i<k?-1:1;let c=0;while(g[k].classList.contains('hide')&&c++<g.length)k=(k+st+g.length)%g.length}li.src=g[k].href;lp.textContent=g[k].querySelector('span').textContent;lb.classList.add('on')}
 g.forEach((a,i)=>a.onclick=e=>{e.preventDefault();show(i)});lb.querySelector('button').onclick=()=>lb.classList.remove('on');
-lb.querySelector('.pv').onclick=()=>show(k-1);lb.querySelector('.nx').onclick=()=>show(k+1);
-addEventListener('keydown',e=>{if(!lb.classList.contains('on'))return;if(e.key=='Escape')lb.classList.remove('on');if(e.key=='ArrowLeft')show(k-1);if(e.key=='ArrowRight')show(k+1)});
+lb.querySelector('.pv').onclick=()=>step(-1);lb.querySelector('.nx').onclick=()=>step(1);function step(d){let j=k;do{j=(j+d+g.length)%g.length}while(g[j].classList.contains('hide')&&j!=k);show(j)}
+addEventListener('keydown',e=>{if(!lb.classList.contains('on'))return;if(e.key=='Escape')lb.classList.remove('on');if(e.key=='ArrowLeft')step(-1);if(e.key=='ArrowRight')step(1)});
+document.querySelectorAll('a[href$=".html"]').forEach(a=>a.addEventListener('click',e=>{if(e.metaKey||e.ctrlKey||a.target)return;e.preventDefault();document.body.classList.add('leaving');setTimeout(()=>location.href=a.href,550)}));
+addEventListener('pageshow',e=>{if(e.persisted)document.body.classList.remove('leaving','loading')});
+const fb=document.querySelectorAll('.filters button');fb.forEach(bt=>bt.onclick=()=>{fb.forEach(x=>x.classList.remove('on'));bt.classList.add('on');const f=bt.dataset.f;g.forEach(a=>a.classList.toggle('hide',f!='*'&&a.dataset.cat!=f))});
+const cf=document.getElementById('cform');if(cf)cf.onsubmit=e=>{e.preventDefault();const d=new FormData(cf);const body=`Nume: ${d.get('nume')}\nTelefon: ${d.get('tel')}\nEmail: ${d.get('email')}\nTip proiect: ${d.get('tip')}\n\n${d.get('mesaj')}`;location.href='mailto:contact@an-design.ro?subject='+encodeURIComponent('Cerere proiect — '+d.get('nume'))+'&body='+encodeURIComponent(body)};
