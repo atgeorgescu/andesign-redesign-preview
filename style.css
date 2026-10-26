@@ -36,8 +36,8 @@ section{padding:130px 0}.hero,.band{padding:0}
 .about,.values,.counters,.cgrid{grid-template-columns:1fr}.values{gap:30px}.counters{grid-template-columns:1fr 1fr}.gallery{grid-template-columns:1fr 1fr;grid-auto-rows:200px}.g.wide{grid-column:span 2}section{padding:90px 0}.steps li{grid-template-columns:70px 1fr}.cgrid{font-size:22px}footer{flex-direction:column;gap:14px}.brand img{height:34px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 /* multi-page */
-.pt{position:fixed;inset:0;background:var(--dark);z-index:98;pointer-events:none;transform:translateY(100%);transition:transform .6s cubic-bezier(.8,0,.2,1)}
-body.leaving .pt{transform:none}body.leaving main{opacity:0;transform:translateY(-20px);transition:.5s}
+.pt{position:fixed;inset:0;background:var(--dark);z-index:98;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
+body.leaving .pt{opacity:1;visibility:visible;transition:opacity .5s ease}body.leaving main{opacity:0;transform:translateY(-20px);transition:.5s}
 main{animation:pin .9s cubic-bezier(.2,.7,.2,1) both .3s}@keyframes pin{from{opacity:0;transform:translateY(24px)}}
 nav a.active:after{width:100%}nav a.active{color:var(--gold)}nav a.cta.active{background:var(--gold);color:#fff}
 .hero.inner{height:62vh;min-height:440px}.hero.inner .hero-in{padding-bottom:9vh}
